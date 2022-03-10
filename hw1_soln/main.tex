@@ -1,0 +1,337 @@
+\documentclass[a4paper]{article}
+\usepackage{student}
+
+% Metadata
+\date{\today}
+\setmodule{Homework 1 Solutions}
+\setterm{Spring 2022}
+
+%-------------------------------%
+% Other details
+% TODO: Fill these
+%-------------------------------%
+\title{Homework 1 Solutions}
+
+%-------------------------------%
+% Add / Delete commands and packages
+% TODO: Add / Delete here as you need
+%-------------------------------%
+\usepackage{amsmath,amssymb,bm}
+
+\newcommand{\KL}{\mathrm{KL}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\T}{\top}
+
+\newcommand{\expdist}[2]{%
+        \normalfont{\textsc{Exp}}(#1, #2)%
+    }
+\newcommand{\expparam}{\bm \lambda}
+\newcommand{\Expparam}{\bm \Lambda}
+\newcommand{\natparam}{\bm \eta}
+\newcommand{\Natparam}{\bm H}
+\newcommand{\sufstat}{\bm u}
+\renewcommand{\thesubsection}{\thesection. \alph{subsection})}
+
+% Main document
+\begin{document}
+
+% Add header
+\header{}
+
+
+\section{System Interconnect}
+You have been tasked with building a system-interconnect for a system-on-chip
+with 256 processing cores. You are considering several options for the on-chip
+system interconnect network: (1) a 16-ary 2-mesh, (2) a 16-ary 2-cube, (3) an
+8-ary 2-Cmesh4, and (4) 16-ary 3-fly Clos. The application requires a packet
+size of 1024 bits.
+
+\subsection{Calculate the required number of bits per unidirectional channel,
+for each network option, such that each of the networks can support the ideal
+throughput of 64 bits/cycle/core under uniform random traffic.}
+
+%-------------------------------------------------------------------------------
+% Question 1. a). 1).
+%-------------------------------------------------------------------------------
+\begin{answer}[Question 1. a) - 16-ary 2-mesh]
+First, let's calculate the total throughput ($\Theta_{total}$) of the network.
+
+\begin{equation}
+    \Theta_{total} = N * \Theta_{core} = 256  \text{ cores} * 64  \text{ bits/core/cycle} = 16,384 \text{ bits/cycle}
+\end{equation}
+
+Now we need to determine the bisection bandwidth ($B_B$) and the number of
+unidirectional bisection channels ($B_C$).  A 4-ary 2-mesh network is shown
+below. Let's solve for its $B_B$ and $B_C$ and then generalize the results.
+\end{answer}
+
+\begin{figure}[!hbt]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figs/4_ary_2_mesh.png}
+\end{figure}
+
+\begin{answer}
+
+The above figure's bisection cut goes through 4 bidirectional channels. Thus
+we get $B_C = 4 * 2 = 8 \text{ unidirectional channels}$. We can also see that under
+uniform random traffic this topology should see a bisection bandwidth that
+is exactly half of the total throughput. Generalizing our results gives us:
+
+\begin{equation}
+    B_C = \sqrt{N} * 2
+\end{equation}
+
+\begin{equation}
+    B_B = \frac{\Theta_{total}}{2}
+\end{equation}
+
+Now we can solve for the unidirectional bandwidth ($b_C$) by dividing the
+bisection bandwidth ($B_B$) by the number of bisection channels ($B_C$).
+Plugging in the numbers for a 16-ary 2-mesh gives us:
+
+\begin{equation}
+    b_C = \frac{B_B}{B_C} = \frac{\frac{16,384}{2}}{16 * 2} = 256 \text{ bits/channel}
+\end{equation}
+
+\end{answer}
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+% Question 1. a). 2).
+%-------------------------------------------------------------------------------
+\begin{answer}[Question 1. a) - 16-ary 2-cube]
+A similar analysis to "Question 1. a) - 16-ary 2-mesh" is performed for this topology.
+
+A smaller network, 4-ary 2-cube, is shown below
+\end{answer}
+
+\begin{figure}[!hbt]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figs/4_ary_2_cube.png}
+\end{figure}
+
+\begin{answer}
+The above figure's bisection cut goes through 8 bidirectional channels. Thus
+we get $B_C = 8 * 2 = 16 \text{ unidirectional channels}$. We can also see that under
+uniform random traffic this topology should see a bisection bandwidth that
+is exactly half of the total throughput. Generalizing our results gives us:
+
+\begin{equation}
+    B_C = \sqrt{N} * 4
+\end{equation}
+
+\begin{equation}
+    B_B = \frac{\Theta_{total}}{2}
+\end{equation}
+
+Now we can solve for the unidirectional bandwidth ($b_C$) by dividing the
+bisection bandwidth ($B_B$) by the number of bisection channels ($B_C$).
+Plugging in the numbers for a 16-ary 2-mesh gives us:
+
+\begin{equation}
+    b_C = \frac{B_B}{B_C} = \frac{\frac{16,384}{2}}{16 * 4} = 128 \text{ bits/channel}
+\end{equation}
+
+\end{answer}
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+% Question 1. a). 3).
+%-------------------------------------------------------------------------------
+\begin{answer}[Question 1. a) - 8-ary 2-Cmesh4]
+A similar analysis to "Question 1. a) - 16-ary 2-mesh" is performed for this topology.
+
+A smaller network, 2-ary 2-Cmesh4, is shown below
+\end{answer}
+
+\begin{figure}[!hbt]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figs/2_ary_2_cmesh4.png}
+\end{figure}
+
+\begin{answer}
+The above figure's bisection cut goes through 2 bidirectional channels. Thus
+we get $B_C = 2 * 2 = 4 \text{ unidirectional channels}$. We can also see that under
+uniform random traffic this topology should see a bisection bandwidth that
+is exactly half of the total throughput. Generalizing our results gives us:
+
+\begin{equation}
+    B_C = \sqrt{\frac{N}{4}}  * 2
+\end{equation}
+
+\begin{equation}
+    B_B = \frac{\Theta_{total}}{2}
+\end{equation}
+
+Now we can solve for the unidirectional bandwidth ($b_C$) by dividing the
+bisection bandwidth ($B_B$) by the number of bisection channels ($B_C$).
+Plugging in the numbers for a 8-ary 2-Cmesh4 gives us:
+
+\begin{equation}
+    b_C = \frac{B_B}{B_C} = \frac{\frac{16,384}{2}}{\sqrt{64} * 2} = 512 \text{ bits/channel}
+\end{equation}
+
+\end{answer}
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+% Question 1. a). 4).
+%-------------------------------------------------------------------------------
+\begin{answer}[Question 1. a) - 16-ary 3-fly]
+A similar analysis to "Question 1. a) - 16-ary 2-mesh" is performed for this topology.
+
+A smaller network, 2-ary 3-fly Clos, is shown below
+\end{answer}
+
+\begin{figure}[!hbt]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figs/2_ary_3_fly_clos.png}
+\end{figure}
+
+\begin{answer}
+The above figure's bisection cut goes through 4 bidirectional channels. Thus
+we get $B_C = 2 * 2 = 8 \text{ unidirectional channels}$. We can also see that under
+uniform random traffic this topology should see a bisection bandwidth that
+is exactly equal to the total throughput. This is different than the previous topologies.
+
+In the above image, the labeled "1/4" on all  the channels represents the
+portion of the total network throughput that any given channel is seeing
+under uniform random traffic. Each core inputs 1/4 of the total throughput into
+the first stage (because we have 4 cores total in this example). The first
+stage switches will split the 1/4 input throughput from one node to two 1/8
+throughput streams onto the outgoing channels. This will give us 1/4 of the
+total network throughput on both outgoing channels (1/8 from one input and
+1/8 from the other). This is repeated until we output 1/4 of the total
+network throughput to each of the core's receivers. Now we can draw our
+bisection line, shown in red, and calculate the ratio of total throughput
+in our bisection cut. It should be very clear that the ratio is 1:1 because
+we have 4 channels crossing the bisection each carrying 1/4 of the total
+data throughput.
+
+Generalizing our results gives us:
+
+\begin{equation}
+    B_C = N
+\end{equation}
+
+\begin{equation}
+    B_B = \Theta_{total}
+\end{equation}
+
+Now we can solve for the unidirectional bandwidth ($b_C$) by dividing the
+bisection bandwidth ($B_B$) by the number of bisection channels ($B_C$).
+Plugging in the numbers for a 16-ary 3-fly gives us:
+
+\begin{equation}
+    b_C = \frac{B_B}{B_C} = \frac{16,384}{256} = 64 \text{ bits/channel}
+\end{equation}
+
+\end{answer}
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+% Question 1. b). 1).
+%-------------------------------------------------------------------------------
+\begin{answer}[Question 1. b) - 16-ary 2-mesh]
+Assuming cut-through flow control, we can calculate the zero-load latency as:
+
+\begin{equation}
+    T_{0} = H*(t_r + \frac{D}{v}) + \frac{L}{b}
+\end{equation}
+
+Where $H$ is the hop count, $t_r$ is the router delay, $D$ is the physical distance
+the signal must traverse, $v$ is the speed of the signal, $L$ is the length
+of the signal in bits, and $b$ is the channel bandwidth.
+
+We have been given a channel latency of 1 cycle. This latency covers both the routing delay ($t_r$)
+and the time of flight delay ($\frac{D}{v}$) for a single hop. We also know that our serialization delay
+is the number of cycles required to serialize the packet across a channel of width $b_C$ (this is the number we
+calculated in the previous question). Thus, our latency equation can be rewritten in terms of "cycles":
+
+\begin{equation}
+    T_{0} = H + \frac{\text{flits per packet}}{\text{cycles per flit}}
+\end{equation}
+
+The flit size is set to a static 64 bits regardless of the channel width $b_C$.
+With a packet size of 1024 bits, this gives us $\frac{1024 \text{ bits per
+packet}}{64 \text{ bits per flit}} = 16 \text{ flits per packet}$.
+
+"cycles per flit" is greater than 1 only when the channel width ($b_C$) is less than the flit size.
+The routers will allocate buffer space at the flit level and thus channels w/ widths greater than the flit size
+will be underutilized (i.e. flits are sent sequentially across channels even for channels with widths
+greater than the flit size. It is important to note that networks will generally never be designed such
+that the flit size is less than the channel width, but this question is an exception).
+
+We want the worst-case zero-load latency and thus we have to find the
+diameter ($H_{max}$) of the network to plug into our latency equation. $H_{max}$ is the
+longest minimum-hop path between two nodes. For this topology, $H_{max}$ is found from
+one corner node to the opposite corner node. We can now solve for the latency
+of the 16-ary 2-mesh:
+
+\begin{equation}
+    H_{max} = (\sqrt{N} * 2) - 1 = 31
+\end{equation}
+
+\begin{equation}
+    T_{0} = H_{max} + \frac{\text{flits per packet}}{\text{cycles per flit}} + \frac{16}{1} = 47 \text{ cycles}
+\end{equation}
+
+\end{answer}
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+% Question 1. b). 2).
+%-------------------------------------------------------------------------------
+\begin{answer}[Question 1. b) - 16-ary 2-cube]
+$H_{max}$ for this topology is found by going from one of the middle nodes to one of
+the corner nodes on the opposite side of the network. Thus,
+
+\begin{equation}
+    H_{max} = \sqrt{N} = 16
+\end{equation}
+
+\begin{equation}
+    T_{0} = H_{max} + \frac{\text{flits per packet}}{\text{cycles per flit}} = 16 + \frac{16}{1} = 32 \text{ cycles}
+\end{equation}
+
+
+\end{answer}
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+% Question 1. b). 3).
+%-------------------------------------------------------------------------------
+\begin{answer}[Question 1. b) - 8-ary 2-Cmesh4]
+$H_{max}$ for this topology is found by going from one of the corner node
+clusters to a node in the opposite corner node cluster.
+
+\begin{equation}
+    H_{max} = (\sqrt{N / 4} * 2) - 1 = 15
+\end{equation}
+
+\begin{equation}
+    T_{0} = H_{max} + \frac{\text{flits per packet}}{\text{cycles per flit}} = 15 + \frac{16}{1} = 31 \text{ cycles}
+\end{equation}
+
+\end{answer}
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+% Question 1. b). 4).
+%-------------------------------------------------------------------------------
+\begin{answer}[Question 1. b) - 16-ary 3-fly]
+$H_{max}$ for this topology is found by going from any node to any other node.
+
+\begin{equation}
+    H_{max} = 3 
+\end{equation}
+
+\begin{equation}
+    T_{0} = H_{max} + \frac{\text{flits per packet}}{\text{cycles per flit}} = 3 + \frac{16}{1} = 19 \text{ cycles}
+\end{equation}
+
+\end{answer}
+%-------------------------------------------------------------------------------
+
+\end{document}

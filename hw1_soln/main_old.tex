@@ -1,0 +1,99 @@
+% Project: hw1
+% Author: Erik Anderson
+% Date: 09/03/2022
+
+% Document class
+\documentclass{article}
+
+% Packages
+\usepackage{enumitem}
+\usepackage{pdfpages}
+\usepackage{hyperref}
+\usepackage[margin=1in]{geometry}
+\usepackage{placeins}
+\usepackage{siunitx}
+\usepackage{ltablex}
+\usepackage{amsmath}
+
+% Implicit float barriers
+\let\Oldsection\section
+\renewcommand{\section}{\FloatBarrier\Oldsection}
+\let\Oldsubsection\subsection
+\renewcommand{\subsection}{\FloatBarrier\Oldsubsection}
+\let\Oldsubsubsection\subsubsection
+\renewcommand{\subsubsection}{\FloatBarrier\Oldsubsubsection}
+
+% Title Page
+\title{Homework 1 Solutions}
+\author{EECS 251B}
+\date{}
+
+% Document Body
+\begin{document}
+\maketitle
+
+% Problem 1
+\section{System Interconnect}
+You have been tasked with building a system-interconnect for a system-on-chip
+with 256 processing cores. You are considering several options for the on-chip
+system interconnect network: (1) a 16-ary 2-mesh, (2) a 16-ary 2-cube, (3) an
+8-ary 2-Cmesh4, and (4) 16-ary 3-fly Clos. The application requires a packet
+size of 1024 bits.
+
+\subsection{Calculate the required number of bits per unidirectional}
+
+
+
+%\section{First}
+%
+%\begin{figure}[!hbt]
+%    \centering
+%    \caption{Example figure}
+%    \label{fig:example}
+%    \includegraphics[width=0.75\textwidth]{figs/ynwa.png}
+%\end{figure}
+%
+%\section{Second}
+%\begin{center}
+%    \begin{tabularx}{\textwidth}{|c|c|c|c|}
+%        \caption{Example table}\label{table:example}\\
+%        \hline
+%        Syndrome & Overall Parity & Error Type & Error Code \\ 
+%        \hline
+%        0 & 0 & No Error & 0b00 \\
+%        \hline
+%        $\neq0$ & 1 & Single Error & 0b01 \\
+%        \hline
+%        $\neq0$ & 0 & Double Error & 0b10 \\
+%        \hline
+%        0 & 1 & Parity Error & 0b11 \\
+%        \hline
+%    \end{tabularx}
+%\end{center}
+%
+%\section{Third}
+%Example equation. Example citation \cite{einstein}. Double citation: \cite{einstein, knuthwebsite}
+%\begin{equation}
+%    T_{high-low} = \SI{10.119}{\nano\second} - \SI{10.015}{\nano\second} 
+%    \approx \SI{104}{\pico\second} 
+%\end{equation}
+%
+%% Start non-bibtex bibliography {9} is for setting hanging indent
+%\begin{thebibliography}{9}
+%\bibitem{latexcompanion} 
+%Michel Goossens, Frank Mittelbach, and Alexander Samarin. 
+%\textit{The \LaTeX\ Companion}. 
+%Addison-Wesley, Reading, Massachusetts, 1993.
+%
+%\bibitem{einstein} 
+%Albert Einstein. 
+%\textit{Zur Elektrodynamik bewegter K{\"o}rper}. (German) 
+%[\textit{On the electrodynamics of moving bodies}]. 
+%Annalen der Physik, 322(10):891–921, 1905.
+%
+%\bibitem{knuthwebsite} 
+%Knuth: Computers and Typesetting,
+%\\\texttt{http://www-cs-faculty.stanford.edu/\~{}uno/abcde.html}
+%\end{thebibliography}
+
+\end{document}
