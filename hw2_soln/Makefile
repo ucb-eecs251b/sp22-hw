@@ -1,8 +1,8 @@
-# Project: hw1
+# Project: hw2
 # Author: Erik Anderson
 # Date: 09/03/2022
 
-MAIN:=hw1_soln
+MAIN:=hw2_soln
 default:=generated/$(MAIN).pdf
 
 # Builds twice for references and toc 
